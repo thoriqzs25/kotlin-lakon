@@ -14,9 +14,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
     fun userPreferencesFlow(): Flow<User> {
         return dataStore.data.map { preferences ->
-            val userId = preferences[USER_ID]  ?: "Not Found"
-            val name = preferences[USER_NAME] ?: "Not Found"
-            val token = preferences[USER_TOKEN] ?: "Not Found"
+            val userId = preferences[USER_ID]  ?: ""
+            val name = preferences[USER_NAME] ?: ""
+            val token = preferences[USER_TOKEN] ?: ""
 
             User(userId, name, token)
         }
@@ -27,6 +27,14 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[USER_ID] = userId
             preferences[USER_NAME] = name
             preferences[USER_TOKEN] = token
+        }
+    }
+
+    suspend fun clearUserPreferences() {
+        dataStore.edit {preferences ->
+            preferences[USER_ID] = ""
+            preferences[USER_NAME] = ""
+            preferences[USER_TOKEN] = ""
         }
     }
 

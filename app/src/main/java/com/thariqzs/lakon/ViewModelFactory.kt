@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.viewmodel.AuthViewModel
+import com.thariqzs.lakon.viewmodel.MainViewModel
+import com.thariqzs.lakon.viewmodel.PostViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application, private val pref: UserPreferences?) : ViewModelProvider.NewInstanceFactory() {
     companion object {
@@ -33,12 +35,19 @@ class ViewModelFactory private constructor(private val mApplication: Application
             } else {
                 throw IllegalArgumentException("UserPreferences cannot be null for AuthViewModel")
             }
+        } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            if (pref != null) {
+                return MainViewModel(mApplication, pref) as T
+            } else {
+                throw IllegalArgumentException("UserPreferences cannot be null for MainViewModel")
+            }
+        } else if (modelClass.isAssignableFrom(PostViewModel::class.java)) {
+            if (pref != null) {
+                return PostViewModel(mApplication, pref) as T
+            } else {
+                throw IllegalArgumentException("UserPreferences cannot be null for PostViewModel")
+            }
         }
-//        else if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-//            return DetailViewModel(mApplication) as T
-//        } else if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
-//            return FavoriteViewModel(mApplication) as T
-//        }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }
 }

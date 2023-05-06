@@ -35,13 +35,16 @@ class LoginFragment : Fragment() {
         authViewModel = obtainViewModel(this)
 
         authViewModel.errorMsg.observe(viewLifecycleOwner) {msg ->
-            Log.d(TAG, "onCreate2: ${msg.peekContent()}")
+            setErrorMessage(msg)
         }
         authViewModel.userDetail.observe(viewLifecycleOwner) {
             if (it.name!!.isNotEmpty() && it.userId!!.isNotEmpty() && it.token!!.isNotEmpty()) {
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
             }
+        }
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
         }
         
         return binding.root
@@ -82,6 +85,26 @@ class LoginFragment : Fragment() {
         val password = binding.etPassword.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) return true
         return false
+    }
+
+    private fun setErrorMessage(msg: Event<String>) {
+        msg.getContentIfNotHandled()?.let {
+            val snackbar = Snackbar.make(
+                requireActivity().window.decorView.rootView,
+                it,
+                Snackbar.LENGTH_SHORT
+            )
+            snackbar.anchorView = binding.botView
+            snackbar.show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.pbLoading.visibility = View.VISIBLE
+        } else {
+            binding.pbLoading.visibility = View.GONE
+        }
     }
 
     companion object {

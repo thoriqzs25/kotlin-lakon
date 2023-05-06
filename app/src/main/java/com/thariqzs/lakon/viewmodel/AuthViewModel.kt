@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.thariqzs.lakon.api.ApiConfig
 import com.thariqzs.lakon.api.AuthResponse
@@ -27,17 +28,31 @@ class AuthViewModel(application: Application, private val pref: UserPreferences)
     private val _errorMsg = MutableLiveData<Event<String>>()
     val errorMsg: LiveData<Event<String>> = _errorMsg
 
+    init {
+        getUserPreferencesData()
+    }
+
+    private fun getUserPreferencesData() {
+        _isLoading.value = true
+        pref.userPreferencesFlow()
+            .asLiveData()
+            .observeForever { user ->
+                _userDetail.value = user
+            }
+        _isLoading.value = false
+    }
+
     fun loginUser(email: String, password: String) {
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) return
 
         _isLoading.value = true
+        Log.d(TAG, "loginUser: $email, $password")
         val client = ApiConfig.getApiService().loginUser(email!!, password!!)
         client.enqueue(object : Callback<AuthResponse> {
             override fun onResponse(
                 call: Call<AuthResponse>,
                 response: Response<AuthResponse>
             ) {
-                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null) {
@@ -52,13 +67,14 @@ class AuthViewModel(application: Application, private val pref: UserPreferences)
                                 userData.name!!,
                                 userData.token!!
                             )
-                            Log.d(TAG, "onResponse: tes ${userData.name}")
                         }
+                        Log.d(TAG, "onResponse: Response body is error ${responseBody.error}")
                     }
                 } else {
                     _errorMsg.value = Event("Server Error, ${response.message()}")
                     Log.d(TAG, "onResponseFail: ${response.message()} ")
                 }
+                _isLoading.value = false
             }
 
             override fun onFailure(call: Call<AuthResponse>, t: Throwable) {

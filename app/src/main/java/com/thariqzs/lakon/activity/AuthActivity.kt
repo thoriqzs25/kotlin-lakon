@@ -38,19 +38,7 @@ class AuthActivity : AppCompatActivity() {
         pref = UserPreferences.getInstance(dataStore)
 
         authViewModel = obtainViewModel(this)
-
-        authViewModel.errorMsg.observe(this) {msg ->
-            Log.d(TAG, "onCreate: ${msg.peekContent()}")
-//            setErrorMessage(msg)
-        }
-        authViewModel.userDetail.observe(this) {
-            Log.d(TAG, "onCreate: line 49 ${it.name} ${it.userId} ${it.token}")
-            if (it.name!!.isNotEmpty() && it.userId!!.isNotEmpty() && it.token!!.isNotEmpty()) {
-                val intent = Intent(this@AuthActivity, MainActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
+        
         setupBindSwitchFragment()
     }
 
@@ -80,18 +68,6 @@ class AuthActivity : AppCompatActivity() {
     private fun obtainViewModel(activity: AuthActivity): AuthViewModel {
         val factory = ViewModelFactory.getInstance(activity.application, pref)
         return ViewModelProvider(activity, factory)[AuthViewModel::class.java]
-    }
-
-    private fun setErrorMessage(msg: Event<String>) {
-        msg.getContentIfNotHandled()?.let {
-            val snackbar = Snackbar.make(
-                window.decorView.rootView,
-                it,
-                Snackbar.LENGTH_SHORT
-            )
-            snackbar.anchorView = binding.botView
-            snackbar.show()
-        }
     }
 
     companion object {

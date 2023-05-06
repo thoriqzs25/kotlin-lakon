@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.ViewModelFactory
 import com.thariqzs.lakon.activity.AuthActivity
 import com.thariqzs.lakon.databinding.FragmentRegisterBinding
+import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.viewmodel.AuthViewModel
 
 class RegisterFragment : Fragment() {
@@ -28,8 +30,12 @@ class RegisterFragment : Fragment() {
         setListeners()
 
         authViewModel = obtainViewModel(this)
+
         authViewModel.errorMsg.observe(viewLifecycleOwner) {msg ->
-            Log.d(TAG, "onCreate3: ${msg.peekContent()}")
+            setErrorMessage(msg)
+        }
+        authViewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
         }
 
         return binding.root
@@ -79,6 +85,26 @@ class RegisterFragment : Fragment() {
         return false
     }
 
+    private fun setErrorMessage(msg: Event<String>) {
+        msg.getContentIfNotHandled()?.let {
+            val snackbar = Snackbar.make(
+                requireActivity().window.decorView.rootView,
+                it,
+                Snackbar.LENGTH_SHORT
+            )
+            snackbar.anchorView = binding.botView
+            snackbar.show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.pbLoading.visibility = View.VISIBLE
+        } else {
+            binding.pbLoading.visibility = View.GONE
+        }
+    }
+    
     companion object {
         val TAG = "rfthoriq"
     }
