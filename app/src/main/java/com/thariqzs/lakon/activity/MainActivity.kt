@@ -8,10 +8,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -19,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.instagramclone.rotateFile
 import com.google.android.material.snackbar.Snackbar
+import com.thariqzs.lakon.R
 import com.thariqzs.lakon.ViewModelFactory
 import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.databinding.ActivityMainBinding
@@ -33,6 +40,12 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class MainActivity : AppCompatActivity() {
     private lateinit var pref: UserPreferences
     private lateinit var mainViewModel: MainViewModel
+
+    private val rotateOpenAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.rotate_open_animation)}
+    private val rotateCloseAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.rotate_close_animation)}
+    private val fromBottomAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.from_bottom_animation)}
+    private val toBottomAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.to_bottom_animation)}
+    private var addButtonClicked = false
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -69,9 +82,55 @@ class MainActivity : AppCompatActivity() {
             setErrorMessage(it)
         }
 
+        binding.fabExpandOptions.setOnClickListener {
+            onExpandFab()
+        }
         binding.fabCreatePost.setOnClickListener {
             val intent = Intent(this@MainActivity, PostActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun onExpandFab() {
+        setVisibility(addButtonClicked)
+        setAnimation(addButtonClicked)
+        buttonSetClickable()
+
+        if (!addButtonClicked){
+            addButtonClicked = true
+        }else{
+            addButtonClicked = false
+        }
+    }
+    private fun setVisibility(buttonClicked: Boolean) {
+        if (!buttonClicked){
+            binding.fabCreatePost.visibility = VISIBLE
+            binding.fabLogout.visibility = VISIBLE
+        }else{
+            binding.fabCreatePost.visibility = INVISIBLE
+            binding.fabLogout.visibility = INVISIBLE
+        }
+    }
+
+    private fun setAnimation(buttonClicked: Boolean) {
+        if (!buttonClicked){
+            binding.fabCreatePost.startAnimation(fromBottomAnimation)
+            binding.fabLogout.startAnimation(fromBottomAnimation)
+            binding.fabExpandOptions.startAnimation(rotateOpenAnimation)
+        }else{
+            binding.fabCreatePost.startAnimation(toBottomAnimation)
+            binding.fabLogout.startAnimation(toBottomAnimation)
+            binding.fabExpandOptions.startAnimation(rotateCloseAnimation)
+        }
+    }
+
+    private fun buttonSetClickable() {
+        if (!addButtonClicked){
+            binding.fabCreatePost.isClickable = true
+            binding.fabLogout.isClickable = true
+        }else{
+            binding.fabCreatePost.isClickable = false
+            binding.fabLogout.isClickable = false
         }
     }
 
@@ -104,10 +163,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setStoriesDataToAdapter(stories: List<ListStoryItem>) {
         binding.rvStories.layoutManager = LinearLayoutManager(this)
-        val adapter = StoryRvAdapter(stories, onPressCard = {
+        val adapter = StoryRvAdapter(stories, onPressCard = { storyItem, holderView ->
             val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            intent.putExtra("story_details", it)
-            startActivity(intent)
+            intent.putExtra("story_details", storyItem)
+            val optionsCompat: ActivityOptionsCompat =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    this@MainActivity,
+                    Pair(holderView,"image")
+                )
+
+            startActivity(intent, optionsCompat.toBundle())
         },)
         binding.rvStories.adapter = adapter
     }

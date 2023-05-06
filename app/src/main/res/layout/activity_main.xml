@@ -7,13 +7,31 @@
     tools:context=".activity.MainActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_create_post"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:id="@+id/fab_expand_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_create_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/fab_expand_options"
+        app:layout_constraintEnd_toEndOf="@id/fab_expand_options" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/fab_create_post"
+        app:layout_constraintEnd_toEndOf="@id/fab_create_post" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_stories"

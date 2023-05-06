@@ -4,10 +4,13 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.databinding.ActivityDetailBinding
 import com.thariqzs.lakon.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityDetailBinding? = null
@@ -26,7 +29,30 @@ class DetailActivity : AppCompatActivity() {
             intent.getParcelableExtra(PARCELIZED_DETAILS)
         }
 
-        Log.d(TAG, "onCreate: ${details?.name}")
+        if (details != null) {
+
+        binding.apply {
+            Glide.with(this@DetailActivity)
+                .load(details.photoUrl)
+                .centerCrop()
+                .into(ivDetail)
+            tvDetailDate.text = formatDate(details.createdAt)
+//            tvDetailDesc.text = spannableString
+            tvDetailDesc.text = details.description
+//            actionBack.setOnClickListener {
+//                finishAfterTransition()
+//            }
+            }
+        }
+    }
+
+    private fun formatDate(date : String) : String {
+        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+
+        val inputDate = inputDateFormat.parse(date)
+        val outputDate = outputDateFormat.format(inputDate)
+        return outputDate.uppercase()
     }
 
     companion object {

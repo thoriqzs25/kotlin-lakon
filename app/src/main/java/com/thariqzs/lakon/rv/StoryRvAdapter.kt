@@ -2,18 +2,19 @@ package com.thariqzs.lakon.rv
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.databinding.StoryCardBinding
 
-class StoryRvAdapter(private val stories: List<ListStoryItem>, private val onPressCard: (ListStoryItem) -> Unit) :
+class StoryRvAdapter(private val stories: List<ListStoryItem>, private val onPressCard: (ListStoryItem, View) -> Unit) :
     RecyclerView.Adapter<StoryRvAdapter.ViewHolder>() {
     inner class ViewHolder(var binding: StoryCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(story: ListStoryItem) {
             itemView.setOnClickListener {
-                onPressCard(story)
+                onPressCard(story, binding.ivStoryImage)
             }
 
             binding.tvStoryName.text = story.name
