@@ -8,32 +8,42 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_expand_options"
+        android:src="@drawable/ic_add_circle_2"
+        app:maxImageSize="36dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create_post"
+        android:src="@drawable/ic_add_gallery"
+        app:maxImageSize="36dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:visibility="invisible"
+        android:backgroundTint="@color/yellow"
         app:layout_constraintBottom_toTopOf="@id/fab_expand_options"
         app:layout_constraintEnd_toEndOf="@id/fab_expand_options" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_logout"
+        android:src="@drawable/ic_logout"
+        app:maxImageSize="36dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:visibility="invisible"
+        android:backgroundTint="@color/red"
         app:layout_constraintBottom_toTopOf="@id/fab_create_post"
         app:layout_constraintEnd_toEndOf="@id/fab_create_post" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="16dp"
         android:id="@+id/rv_stories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -41,34 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_stories"/>
-
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <Button
-        android:id="@+id/btn_camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Open Camera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_logout" />
 
     <View
         android:id="@+id/bot_view"

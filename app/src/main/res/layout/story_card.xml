@@ -4,51 +4,65 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_custom_cv"
+        android:padding="16dp"
+        >
 
         <ImageView
             android:id="@+id/iv_story_image"
             android:layout_width="0dp"
-            android:layout_height="320dp"
+            android:layout_height="200dp"
             android:scaleType="fitXY"
             android:transitionName="image"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/shape_rounded_corners"
+            android:clipToOutline="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_story_desc"
             />
 
         <TextView
             android:id="@+id/tv_story_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_height="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/white"
             android:text="nama"
-            app:layout_constraintBottom_toTopOf="@id/tv_story_date"
-            app:layout_constraintStart_toStartOf="@id/tv_story_date" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/tv_story_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins"
             android:text="tanggal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/iv_story_image" />
+            android:textColor="@color/date_color"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/tv_story_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_story_name" />
 
         <TextView
             android:id="@+id/tv_story_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="deskripsi"
-            android:layout_marginVertical="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="@id/tv_story_name"
-            app:layout_constraintTop_toBottomOf="@id/iv_story_image"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_story_date"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

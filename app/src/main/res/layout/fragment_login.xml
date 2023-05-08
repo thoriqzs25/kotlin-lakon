@@ -6,67 +6,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/fragment_horizontal_margin"
-    android:paddingTop="@dimen/fragment_vertical_margin"
     android:paddingRight="@dimen/fragment_horizontal_margin"
     android:paddingBottom="@dimen/fragment_vertical_margin"
+    android:layout_marginTop="48dp"
     tools:context=".ui.fragment.LoginFragment">
 
-    <TextView
-        android:id="@+id/textView"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/please_login"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:hintEnabled="false"
+        app:layout_constraintBottom_toTopOf="@id/til_pass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+      >
 
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="0dp"
+        <com.thariqzs.lakon.components.CustomEditText
+            android:id="@+id/cet_email"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_custom_et"
+            android:drawableStart="@drawable/ic_email_input"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/poppins"
+            android:includeFontPadding="false"
+            android:hint="Email"
+            android:paddingHorizontal="16dp"
+            android:padding="0dp"
+            android:textColor="@color/grey" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pass"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
+        android:layout_marginTop="16dp"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/til_email"
+        app:passwordToggleDrawable="@drawable/ic_show_password_selector"
+        app:passwordToggleEnabled="true">
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_login_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        <com.thariqzs.lakon.components.CustomEditText
+            android:id="@+id/cet_pass"
+            android:layout_width="300dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_custom_et"
+            android:drawableStart="@drawable/ic_password_input"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/poppins"
+            android:includeFontPadding="false"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingRight="48dp"
+            android:padding="0dp"
+            android:textColor="@color/grey" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_login"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="64dp"
-        android:enabled="false"
+        android:layout_height="52dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/bg_custom_btn"
         android:text="@string/action_login"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_password" />
-    />
-
+        app:layout_constraintTop_toBottomOf="@id/til_pass" />
 
     <ProgressBar
         android:id="@+id/pb_loading"
@@ -79,10 +90,11 @@
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
-        app:layout_constraintStart_toStartOf="@+id/et_password"
+        app:layout_constraintEnd_toEndOf="@+id/til_pass"
+        app:layout_constraintStart_toStartOf="@+id/til_pass"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
+
     <View
         android:id="@+id/bot_view"
         android:layout_width="wrap_content"

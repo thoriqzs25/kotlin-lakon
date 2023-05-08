@@ -46,10 +46,8 @@ class AuthActivity : AppCompatActivity() {
         binding.tvLoginRegisterSwitchFragment.setOnClickListener {
             val currentText = binding.tvLoginRegisterSwitchFragment.text
             if (currentText == getString(R.string.sign_up_here)) {
-                binding.tvLoginRegisterNote.text = getString(R.string.already_have_an_account)
                 binding.tvLoginRegisterSwitchFragment.text = getString(R.string.login)
             } else if (currentText == getString(R.string.login)) {
-                binding.tvLoginRegisterNote.text = getString(R.string.don_t_have_an_account_yet)
                 binding.tvLoginRegisterSwitchFragment.text = getString(R.string.sign_up_here)
             }
 

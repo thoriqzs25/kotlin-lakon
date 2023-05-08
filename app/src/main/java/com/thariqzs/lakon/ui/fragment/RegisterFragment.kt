@@ -54,20 +54,20 @@ class RegisterFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 // This method is called after the text is changed.
                 val isAllFilled = checkAllFieldFilled()
-                binding.btnRegister.isEnabled = isAllFilled
+//                binding.btnRegister.isEnabled = isAllFilled
             }
         }
-        binding.etName.addTextChangedListener(textWatcher)
-        binding.etEmail.addTextChangedListener(textWatcher)
-        binding.etPassword.addTextChangedListener(textWatcher)
+        binding.cetName.addTextChangedListener(textWatcher)
+        binding.cetEmail.addTextChangedListener(textWatcher)
+        binding.cetPass.addTextChangedListener(textWatcher)
         binding.btnRegister.setOnClickListener {
-            val name = binding.etName.text.toString()
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
+            val name = binding.cetName.text.toString()
+            val email = binding.cetEmail.text.toString()
+            val password = binding.cetPass.text.toString()
             authViewModel.registerUser(name, email, password)
             Log.d(
                 TAG,
-                "onCreate:  ${binding.etName.text} ${binding.etEmail.text} ${binding.etPassword.text}"
+                "onCreate:  ${binding.cetName.text} ${binding.cetEmail.text} ${binding.cetPass.text}"
             )
         }
     }
@@ -78,9 +78,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun checkAllFieldFilled(): Boolean {
-        val name = binding.etName.text.toString()
-        val email = binding.etEmail.text.toString()
-        val password = binding.etPassword.text.toString()
+        val name = binding.cetName.text.toString()
+        val email = binding.cetEmail.text.toString()
+        val password = binding.cetPass.text.toString()
         if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) return true
         return false
     }

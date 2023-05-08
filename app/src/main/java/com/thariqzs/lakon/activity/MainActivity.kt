@@ -86,9 +86,21 @@ class MainActivity : AppCompatActivity() {
             onExpandFab()
         }
         binding.fabCreatePost.setOnClickListener {
+            onExpandFab()
             val intent = Intent(this@MainActivity, PostActivity::class.java)
             startActivity(intent)
         }
+        binding.fabLogout.setOnClickListener {
+            onExpandFab()
+            mainViewModel.logoutUser()
+        }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart: 101")
+        binding.fabLogout.visibility = INVISIBLE
+        binding.fabCreatePost.visibility = INVISIBLE
     }
 
     private fun onExpandFab() {
@@ -171,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                     this@MainActivity,
                     Pair(holderView,"image")
                 )
-
+            if (addButtonClicked) onExpandFab()
             startActivity(intent, optionsCompat.toBundle())
         },)
         binding.rvStories.adapter = adapter

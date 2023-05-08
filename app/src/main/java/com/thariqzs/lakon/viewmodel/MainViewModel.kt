@@ -72,7 +72,6 @@ class MainViewModel(application: Application, private var pref: UserPreferences)
             ) {
                 _isLoading.value = false
                 if (response.isSuccessful) {
-                    Log.d(TAG, "onResponse: ${response.body()?.message}")
                     _stories.value = sortByDate(response.body()?.listStory)
                 } else {
                     Log.d(TAG, "onResponseFail: ${response.message()} ")

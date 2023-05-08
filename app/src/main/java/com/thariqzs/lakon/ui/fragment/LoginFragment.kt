@@ -15,6 +15,7 @@ import com.thariqzs.lakon.R
 import com.thariqzs.lakon.ViewModelFactory
 import com.thariqzs.lakon.activity.AuthActivity
 import com.thariqzs.lakon.activity.MainActivity
+import com.thariqzs.lakon.components.CustomEditText
 import com.thariqzs.lakon.databinding.FragmentLoginBinding
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.viewmodel.AuthViewModel
@@ -46,6 +47,9 @@ class LoginFragment : Fragment() {
         authViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
+
+        binding.cetEmail.setValidationType(CustomEditText.ValidationType.EMAIL)
+        binding.cetPass.setValidationType(CustomEditText.ValidationType.PASSWORD)
         
         return binding.root
     }
@@ -63,14 +67,14 @@ class LoginFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 // This method is called after the text is changed.
                 val isAllFilled = checkAllFieldFilled()
-                binding.btnLogin.isEnabled = isAllFilled
+//                binding.btnLogin.isEnabled = isAllFilled
             }
         }
-        binding.etEmail.addTextChangedListener(textWatcher)
-        binding.etPassword.addTextChangedListener(textWatcher)
+        binding.cetEmail.addTextChangedListener(textWatcher)
+        binding.cetPass.addTextChangedListener(textWatcher)
         binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text.toString()
-            val password = binding.etPassword.text.toString()
+            val email = binding.cetEmail.text.toString()
+            val password = binding.cetPass.text.toString()
             authViewModel.loginUser(email, password)
         }
     }
@@ -81,8 +85,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkAllFieldFilled(): Boolean {
-        val email = binding.etEmail.text.toString()
-        val password = binding.etPassword.text.toString()
+        val email = binding.cetEmail.text.toString()
+        val password = binding.cetPass.text.toString()
         if (email.isNotEmpty() && password.isNotEmpty()) return true
         return false
     }

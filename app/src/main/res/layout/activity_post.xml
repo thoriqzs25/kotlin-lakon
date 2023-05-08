@@ -5,58 +5,97 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.PostActivity">
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_preview_image"
+        >
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_back"
+            android:backgroundTint="@color/white"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Post"
+            android:fontFamily="@font/poppins_semibold"
+            android:includeFontPadding="false"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/v_preview_image"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="24dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/grey"
+        android:background="@drawable/shape_rounded_corners"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        app:layout_constraintTop_toBottomOf="@id/cl_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentInsetLeft="16dp"
-            android:contentInsetStart="16dp"
-            app:contentInsetLeft="16dp"
-            app:contentInsetStart="0dp"
-            android:contentInsetRight="0dp"
-            android:contentInsetEnd="0dp"
-            app:contentInsetRight="0dp"
-            app:contentInsetEnd="0dp"
-            android:background="@color/white"
-            android:minHeight="?attr/actionBarSize"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/ib_back"
-                    android:layout_width="48dp"
-                    android:layout_height="32dp"
-                    android:background="@null"
-                    android:contentDescription="Back"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_back"
-                    app:tint="@color/black"
-                    />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".50"
-                    android:text="Judul Post"
-                    android:textColor="@color/black"
-                    android:textSize="24sp" />
-            </LinearLayout>
+        />
+    <ImageView
+        android:id="@+id/iv_image_placeholder"
+        android:src="@drawable/ic_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@id/v_preview_image"
+        app:layout_constraintEnd_toEndOf="@id/v_preview_image"
+        app:layout_constraintTop_toTopOf="@id/v_preview_image"
+        app:layout_constraintBottom_toBottomOf="@id/v_preview_image"/>
 
 
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+    <ImageView
+        android:id="@+id/iv_preview_image"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_rounded_corners"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        app:layout_constraintTop_toBottomOf="@id/cl_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <EditText
+        android:id="@+id/et_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Write a caption.."
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/date_color"
+        android:textColorHint="@color/date_color"
+        android:backgroundTint="@color/date_color"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btn_camera"
+        app:layout_constraintTop_toBottomOf="@id/v_preview_image" />
 
     <Button
         android:id="@+id/btn_camera_x"
@@ -65,38 +104,15 @@
         android:layout_marginStart="8dp"
         android:elevation="2dp"
         android:scaleType="fitCenter"
-        android:text="Camera X"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:includeFontPadding="false"
+        android:text="CameraX"
         app:layout_constraintBottom_toBottomOf="@+id/btn_camera"
         app:layout_constraintEnd_toStartOf="@+id/btn_camera"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_camera" />
-
-    <ImageView
-        android:id="@+id/iv_preview_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/et_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-         />
-
-    <EditText
-        android:id="@+id/et_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Deskripsi"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/btn_camera"
-        app:layout_constraintTop_toBottomOf="@id/iv_preview_image" />
 
     <Button
         android:id="@+id/btn_camera"
@@ -105,7 +121,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:includeFontPadding="false"
         android:text="Camera"
+        android:backgroundTint="@color/yellow"
+        app:layout_constraintTop_toBottomOf="@id/et_description"
         app:layout_constraintBottom_toTopOf="@+id/btn_upload"
         app:layout_constraintEnd_toStartOf="@+id/btn_gallery"
         app:layout_constraintHorizontal_bias="0.5"
@@ -116,22 +138,29 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:includeFontPadding="false"
         android:text="Gallery"
+        android:backgroundTint="@color/green"
         app:layout_constraintBottom_toBottomOf="@+id/btn_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_camera"
         app:layout_constraintTop_toTopOf="@+id/btn_camera" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_upload"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:includeFontPadding="false"
         android:text="Upload"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAllCaps="false"
+        android:background="@drawable/bg_custom_btn"
+        app:layout_constraintTop_toBottomOf="@id/btn_camera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

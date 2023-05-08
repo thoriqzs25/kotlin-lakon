@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -83,7 +84,7 @@ class PostActivity : AppCompatActivity() {
         binding.btnGallery.setOnClickListener {
             startGallery()
         }
-        binding.ibBack.setOnClickListener {
+        binding.icBack.setOnClickListener {
             finish()
         }
     }
@@ -132,6 +133,8 @@ class PostActivity : AppCompatActivity() {
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
                 binding.ivPreviewImage.setImageBitmap(BitmapFactory.decodeFile(file.path))
+                binding.vPreviewImage.visibility = INVISIBLE
+                binding.ivImagePlaceholder.visibility = INVISIBLE
             }
         }
     }
@@ -145,6 +148,8 @@ class PostActivity : AppCompatActivity() {
                 val myFile = uriToFile(uri, this@PostActivity)
                 getFile = myFile
                 binding.ivPreviewImage.setImageURI(uri)
+                binding.vPreviewImage.visibility = INVISIBLE
+                binding.ivImagePlaceholder.visibility = INVISIBLE
             }
         }
     }
@@ -156,10 +161,10 @@ class PostActivity : AppCompatActivity() {
             val myFile = File(currentPhotoPath)
 
             myFile.let { file ->
-//              Silakan gunakan kode ini jika mengalami perubahan rotasi
-//              rotateFile(file)
                 getFile = file
                 binding.ivPreviewImage.setImageBitmap(BitmapFactory.decodeFile(file.path))
+                binding.vPreviewImage.visibility = INVISIBLE
+                binding.ivImagePlaceholder.visibility = INVISIBLE
             }
         }
     }
