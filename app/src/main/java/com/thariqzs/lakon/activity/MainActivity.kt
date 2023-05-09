@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.View.INVISIBLE
@@ -46,7 +47,10 @@ class MainActivity : AppCompatActivity() {
     private val rotateCloseAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.rotate_close_animation)}
     private val fromBottomAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.from_bottom_animation)}
     private val toBottomAnimation: Animation by lazy {AnimationUtils.loadAnimation(this, R.anim.to_bottom_animation)}
+
     private var addButtonClicked = false
+    private var triggerOnRestart = true
+    private var token = ""
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -73,8 +77,10 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, AuthActivity::class.java)
                 startActivity(intent)
             }
-            else
+            else {
                 mainViewModel.getStories(it.token)
+                token = it.token
+            }
         }
         mainViewModel.stories.observe(this) {
             setStoriesDataToAdapter(it)
@@ -98,11 +104,23 @@ class MainActivity : AppCompatActivity() {
             onExpandFab()
             mainViewModel.logoutUser()
         }
+        binding.srlMain.setOnRefreshListener {
+            mainViewModel.getStories(token)
+            Handler().postDelayed(Runnable {
+                binding.srlMain.isRefreshing = false
+            }, 750)
+        }
     }
 
     override fun onRestart() {
         super.onRestart()
-        mainViewModel.getUserPreferencesData()
+        if (triggerOnRestart)
+        mainViewModel.getStories(token)
+
+        triggerOnRestart = true
+    }
+
+    override fun onBackPressed() {
     }
     
     private fun onExpandFab() {
@@ -181,6 +199,7 @@ class MainActivity : AppCompatActivity() {
                     this@MainActivity,
                     Pair(holderView,"image")
                 )
+            triggerOnRestart = false
             if (addButtonClicked) onExpandFab()
             startActivity(intent, optionsCompat.toBundle())
         },)

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/srl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,6 +23,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/green"
+        app:tint="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -27,6 +36,7 @@
         android:layout_marginBottom="16dp"
         android:visibility="invisible"
         android:backgroundTint="@color/yellow"
+        app:tint="@color/background"
         app:layout_constraintBottom_toTopOf="@id/fab_expand_options"
         app:layout_constraintEnd_toEndOf="@id/fab_expand_options" />
 
@@ -39,6 +49,7 @@
         android:layout_marginBottom="16dp"
         android:visibility="invisible"
         android:backgroundTint="@color/red"
+        app:tint="@color/background"
         app:layout_constraintBottom_toTopOf="@id/fab_create_post"
         app:layout_constraintEnd_toEndOf="@id/fab_create_post" />
 
@@ -75,3 +86,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

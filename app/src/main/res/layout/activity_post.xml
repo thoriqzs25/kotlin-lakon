@@ -109,6 +109,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:includeFontPadding="false"
         android:text="CameraX"
+        android:backgroundTint="@color/red"
         app:layout_constraintBottom_toBottomOf="@+id/btn_camera"
         app:layout_constraintEnd_toStartOf="@+id/btn_camera"
         app:layout_constraintHorizontal_bias="0.5"

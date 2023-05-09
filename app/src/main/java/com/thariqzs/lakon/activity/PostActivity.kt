@@ -133,6 +133,7 @@ class PostActivity : AppCompatActivity() {
 
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
+                getFile = file
                 binding.ivPreviewImage.setImageBitmap(BitmapFactory.decodeFile(file.path))
                 binding.vPreviewImage.visibility = INVISIBLE
                 binding.ivImagePlaceholder.visibility = INVISIBLE
