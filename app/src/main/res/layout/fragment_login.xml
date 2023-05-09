@@ -73,11 +73,13 @@
         android:background="@drawable/bg_custom_btn"
         android:text="@string/action_login"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="@ft/poppins_bold"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_pass" />
+        app:layout_constraintTop_toBottomOf="@id/til_pass"
+        style="@style/buttonTextStyle"
+        />
 
     <ProgressBar
         android:id="@+id/pb_loading"

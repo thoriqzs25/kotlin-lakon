@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="buttonTextStyle" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@drawable/btn_text_color</item>
+    </style>
+</resources>

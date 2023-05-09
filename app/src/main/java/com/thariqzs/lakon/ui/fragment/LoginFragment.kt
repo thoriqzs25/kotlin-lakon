@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
@@ -35,7 +36,7 @@ class LoginFragment : Fragment() {
 
         authViewModel = obtainViewModel(this)
 
-        authViewModel.errorMsg.observe(viewLifecycleOwner) {msg ->
+        authViewModel.errorMsg.observe(viewLifecycleOwner) { msg ->
             setErrorMessage(msg)
         }
         authViewModel.userDetail.observe(viewLifecycleOwner) {
@@ -50,7 +51,7 @@ class LoginFragment : Fragment() {
 
         binding.cetEmail.setValidationType(CustomEditText.ValidationType.EMAIL)
         binding.cetPass.setValidationType(CustomEditText.ValidationType.PASSWORD)
-        
+
         return binding.root
     }
 
@@ -66,16 +67,29 @@ class LoginFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 // This method is called after the text is changed.
-                val isAllFilled = checkAllFieldFilled()
-//                binding.btnLogin.isEnabled = isAllFilled
+                binding.btnLogin.isEnabled = checkAllFieldFilled()
             }
         }
+
         binding.cetEmail.addTextChangedListener(textWatcher)
         binding.cetPass.addTextChangedListener(textWatcher)
         binding.btnLogin.setOnClickListener {
             val email = binding.cetEmail.text.toString()
             val password = binding.cetPass.text.toString()
-            authViewModel.loginUser(email, password)
+            val emailValidation = binding.cetEmail.validate(email)
+            val passwordValidation = binding.cetPass.validate(password)
+
+            if (emailValidation.isNullOrEmpty() && passwordValidation.isNullOrEmpty()) {
+                authViewModel.loginUser(email, password)
+            } else {
+                var errMsg: String = ""
+                if (!emailValidation.isNullOrEmpty()) {
+                    errMsg = emailValidation
+                } else if (!passwordValidation.isNullOrEmpty()) {
+                    errMsg = passwordValidation
+                }
+                setErrorMessage(Event(errMsg))
+            }
         }
     }
 

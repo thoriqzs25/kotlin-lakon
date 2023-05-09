@@ -49,8 +49,9 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
                 val input = s.toString().trim()
                 if (validate(input)?.isNotEmpty() == true) {
                     setBackgroundResource(R.drawable.bg_custom_et_error)
-                } else
-                setBackgroundResource(R.drawable.bg_custom_et)
+                } else {
+                    setBackgroundResource(R.drawable.bg_custom_et)
+                }
             }
         })
     }
@@ -60,15 +61,18 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
     }
 
     fun validate(input: String): String? {
-        when (validationType) {
+        return when (validationType) {
             ValidationType.EMAIL -> {
-                return isEmailValid(input)
+    //                error = isEmailValid(input)
+                isEmailValid(input)
             }
+
             ValidationType.PASSWORD -> {
-                return isPasswordValid(input)
+                isPasswordValid(input)
             }
+
             else -> {
-                return null // no validation needed
+                null // no validation needed
             }
         }
     }
@@ -84,7 +88,7 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
 
     private fun isPasswordValid(pass: String): String? {
         if (pass.length >= 8) return null
-        return "Input must be at least 8 characters"
+        return "Password must be at least 8 characters"
     }
 
     companion object {
