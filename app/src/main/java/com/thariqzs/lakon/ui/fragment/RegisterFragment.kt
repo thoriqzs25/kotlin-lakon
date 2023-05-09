@@ -1,5 +1,6 @@
 package com.thariqzs.lakon.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.ViewModelFactory
 import com.thariqzs.lakon.activity.AuthActivity
+import com.thariqzs.lakon.activity.MainActivity
+import com.thariqzs.lakon.components.CustomEditText
 import com.thariqzs.lakon.databinding.FragmentRegisterBinding
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.viewmodel.AuthViewModel
@@ -34,9 +37,19 @@ class RegisterFragment : Fragment() {
         authViewModel.errorMsg.observe(viewLifecycleOwner) {msg ->
             setErrorMessage(msg)
         }
+        authViewModel.userDetail.observe(viewLifecycleOwner) {
+            if (it.name!!.isNotEmpty() && it.userId!!.isNotEmpty() && it.token!!.isNotEmpty()) {
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
         authViewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
+
+        binding.cetEmail.setValidationType(CustomEditText.ValidationType.EMAIL)
+        binding.cetPass.setValidationType(CustomEditText.ValidationType.PASSWORD)
+        binding.cetName.setValidationType(CustomEditText.ValidationType.NAME)
 
         return binding.root
     }
@@ -53,8 +66,7 @@ class RegisterFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 // This method is called after the text is changed.
-                val isAllFilled = checkAllFieldFilled()
-//                binding.btnRegister.isEnabled = isAllFilled
+                binding.btnRegister.isEnabled = checkAllFieldFilled()
             }
         }
         binding.cetName.addTextChangedListener(textWatcher)
@@ -64,11 +76,24 @@ class RegisterFragment : Fragment() {
             val name = binding.cetName.text.toString()
             val email = binding.cetEmail.text.toString()
             val password = binding.cetPass.text.toString()
-            authViewModel.registerUser(name, email, password)
-            Log.d(
-                TAG,
-                "onCreate:  ${binding.cetName.text} ${binding.cetEmail.text} ${binding.cetPass.text}"
-            )
+            val nameValidation = binding.cetName.validate(name)
+            val emailValidation = binding.cetEmail.validate(email)
+            val passwordValidation = binding.cetPass.validate(password)
+
+            if (emailValidation.isNullOrEmpty() && passwordValidation.isNullOrEmpty() && nameValidation.isNullOrEmpty()) {
+                authViewModel.registerUser(name, email, password)
+            } else {
+                var errMsg: String = ""
+                if (!nameValidation.isNullOrEmpty()) {
+                    errMsg = nameValidation
+                } else if (!emailValidation.isNullOrEmpty()) {
+                    errMsg = emailValidation
+                } else if (!passwordValidation.isNullOrEmpty()) {
+                    errMsg = passwordValidation
+                }
+                setErrorMessage(Event(errMsg))
+            }
+
         }
     }
 

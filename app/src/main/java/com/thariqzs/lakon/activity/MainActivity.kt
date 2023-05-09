@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.animation.Animation
@@ -81,6 +82,9 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.errorMsg.observe(this) {
             setErrorMessage(it)
         }
+        mainViewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
 
         binding.fabExpandOptions.setOnClickListener {
             onExpandFab()
@@ -98,21 +102,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        Log.d(TAG, "onRestart: 101")
-        binding.fabLogout.visibility = INVISIBLE
-        binding.fabCreatePost.visibility = INVISIBLE
+        mainViewModel.getUserPreferencesData()
     }
-
+    
     private fun onExpandFab() {
         setVisibility(addButtonClicked)
         setAnimation(addButtonClicked)
         buttonSetClickable()
 
-        if (!addButtonClicked){
-            addButtonClicked = true
-        }else{
-            addButtonClicked = false
-        }
+        addButtonClicked = !addButtonClicked
     }
     private fun setVisibility(buttonClicked: Boolean) {
         if (!buttonClicked){
@@ -198,6 +196,14 @@ class MainActivity : AppCompatActivity() {
             )
             snackbar.anchorView = binding.botView
             snackbar.show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.pbLoading.visibility = View.VISIBLE
+        } else {
+            binding.pbLoading.visibility = View.GONE
         }
     }
 

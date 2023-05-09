@@ -19,6 +19,7 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
     enum class ValidationType {
         EMAIL,
         PASSWORD,
+        NAME,
         TEXT
     }
 
@@ -71,6 +72,9 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
                 isPasswordValid(input)
             }
 
+            ValidationType.NAME -> {
+                isNameValid(input)
+            }
             else -> {
                 null // no validation needed
             }
@@ -89,6 +93,11 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
     private fun isPasswordValid(pass: String): String? {
         if (pass.length >= 8) return null
         return "Password must be at least 8 characters"
+    }
+
+    private fun isNameValid(name: String): String? {
+        if (name.isNotEmpty()) return null
+        return "Input valid naming"
     }
 
     companion object {

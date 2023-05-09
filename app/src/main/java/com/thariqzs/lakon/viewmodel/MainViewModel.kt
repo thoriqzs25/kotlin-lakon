@@ -38,7 +38,7 @@ class MainViewModel(application: Application, private var pref: UserPreferences)
         getUserPreferencesData()
     }
 
-    private fun getUserPreferencesData() {
+    fun getUserPreferencesData() {
         pref.userPreferencesFlow()
             .asLiveData()
             .observeForever { user ->

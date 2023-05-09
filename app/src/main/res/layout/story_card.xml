@@ -8,6 +8,7 @@
     android:layout_marginHorizontal="12dp"
     android:layout_marginBottom="12dp"
     app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="@color/grey"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +22,7 @@
             android:id="@+id/iv_story_image"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:transitionName="image"
             android:layout_marginTop="4dp"
             android:background="@drawable/shape_rounded_corners"

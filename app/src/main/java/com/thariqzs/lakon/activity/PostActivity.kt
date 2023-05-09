@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -161,6 +162,7 @@ class PostActivity : AppCompatActivity() {
             val myFile = File(currentPhotoPath)
 
             myFile.let { file ->
+                rotateFile(file)
                 getFile = file
                 binding.ivPreviewImage.setImageBitmap(BitmapFactory.decodeFile(file.path))
                 binding.vPreviewImage.visibility = INVISIBLE
@@ -203,5 +205,9 @@ class PostActivity : AppCompatActivity() {
             snackbar.anchorView = binding.botView
             snackbar.show()
         }
+    }
+
+    companion object {
+        val TAG = "pathoriq"
     }
 }

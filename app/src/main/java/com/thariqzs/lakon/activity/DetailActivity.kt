@@ -30,23 +30,19 @@ class DetailActivity : AppCompatActivity() {
         }
 
         if (details != null) {
-
-        binding.apply {
-            Glide.with(this@DetailActivity)
-                .load(details.photoUrl)
-                .centerCrop()
-                .into(ivDetail)
-            tvDetailDate.text = formatDate(details.createdAt)
-//            tvDetailDesc.text = spannableString
-            tvDetailDesc.text = details.description
-//            actionBack.setOnClickListener {
-//                finishAfterTransition()
-//            }
+            binding.apply {
+                Glide.with(this@DetailActivity)
+                    .load(details.photoUrl)
+                    .centerCrop()
+                    .into(ivDetail)
+                tvDetailDate.text = formatDate(details.createdAt)
+                tvDetailDesc.text = details.description
+                tvDetailName.text = details.name
             }
         }
     }
 
-    private fun formatDate(date : String) : String {
+    private fun formatDate(date: String): String {
         val inputDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val outputDateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
 

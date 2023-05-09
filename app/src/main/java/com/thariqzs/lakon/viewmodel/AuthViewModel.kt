@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.thariqzs.lakon.activity.MainActivity
 import com.thariqzs.lakon.api.ApiConfig
 import com.thariqzs.lakon.api.AuthResponse
 import com.thariqzs.lakon.data.User
@@ -105,6 +106,7 @@ class AuthViewModel(application: Application, private val pref: UserPreferences)
                         } else {
                             _errorMsg.value =
                                 Event("User registered")
+                            loginUser(email, password)
                         }
                     }
                 } else {
