@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.instagramclone.getTimeAgo
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.databinding.StoryCardBinding
@@ -20,7 +21,7 @@ class StoryRvAdapter(private val stories: List<ListStoryItem>, private val onPre
 
             binding.tvStoryName.text = story.name
             binding.tvStoryDesc.text = story.description
-            binding.tvStoryDate.text = story.createdAt
+            binding.tvStoryDate.text = getTimeAgo(story.createdAt)
 
             Glide.with(binding.root)
                 .load(story.photoUrl)

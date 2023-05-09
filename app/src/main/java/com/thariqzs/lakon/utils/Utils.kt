@@ -87,3 +87,31 @@ fun reduceFileImage(file: File): File {
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
 }
+
+fun getTimeAgo(dateStr: String): String? {
+    val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    format.timeZone = TimeZone.getTimeZone("UTC")
+    try {
+        val date = format.parse(dateStr)
+        val cal = Calendar.getInstance()
+        cal.time = date
+        val timeInMillis = cal.timeInMillis
+        val now = System.currentTimeMillis()
+        val diff = now - timeInMillis
+        val seconds = diff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        val days = hours / 24
+        return when {
+            seconds < 60 -> "$seconds seconds ago"
+            minutes < 60 -> "$minutes minutes ago"
+            hours < 24 -> "$hours hours ago"
+            days == 1L -> "yesterday"
+            days < 7 -> "$days days ago"
+            else -> SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        return null
+    }
+}
