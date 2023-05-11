@@ -114,8 +114,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        if (triggerOnRestart)
-        mainViewModel.getStories(token)
+        if (triggerOnRestart) {
+            showLoading(true)
+            Handler().postDelayed(Runnable {
+            mainViewModel.getStories(token)
+            }, 1500)
+        }
 
         triggerOnRestart = true
     }
