@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -205,6 +206,14 @@ class PostActivity : AppCompatActivity() {
             )
             snackbar.anchorView = binding.botView
             snackbar.show()
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.pbLoading.visibility = View.VISIBLE
+        } else {
+            binding.pbLoading.visibility = View.GONE
         }
     }
 

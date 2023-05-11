@@ -43,6 +43,7 @@ class PostViewModel(private val mApplication: Application, private val pref: Use
     }
 
     fun postStory(token: String, desc: RequestBody, imageMultipart: MultipartBody.Part) {
+        _isLoading.value = true
         val apiService = ApiConfig.getApiService()
         val uploadImageRequest = apiService.uploadImage("Bearer $token",imageMultipart, desc)
         uploadImageRequest.enqueue(object : Callback<FileUploadResponse> {
@@ -50,6 +51,7 @@ class PostViewModel(private val mApplication: Application, private val pref: Use
                 call: Call<FileUploadResponse>,
                 response: Response<FileUploadResponse>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error) {
@@ -61,6 +63,7 @@ class PostViewModel(private val mApplication: Application, private val pref: Use
             }
 
             override fun onFailure(call: Call<FileUploadResponse>, t: Throwable) {
+                _isLoading.value = false
                 _errorMsg.value = Event("Server Error, ${t.message}")
             }
         })
