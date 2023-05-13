@@ -1,7 +1,6 @@
 package com.thariqzs.lakon.viewmodel
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

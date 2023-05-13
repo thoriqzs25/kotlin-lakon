@@ -2,11 +2,11 @@ package com.thariqzs.lakon.activity
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -15,7 +15,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.instagramclone.createFile
 import com.thariqzs.lakon.R
-import com.thariqzs.lakon.databinding.ActivityAuthBinding
 import com.thariqzs.lakon.databinding.ActivityCameraBinding
 
 class CameraActivity : AppCompatActivity() {
@@ -57,15 +56,15 @@ class CameraActivity : AppCompatActivity() {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
                         this@CameraActivity,
-                        "Gagal mengambil gambar.",
+                        getString(R.string.gagal_mengambil_gambar),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val intent = Intent()
-                    intent.putExtra("picture", photoFile)
+                    intent.putExtra(getString(R.string.picture), photoFile)
                     intent.putExtra(
-                        "isBackCamera",
+                        getString(R.string.isbackcamera),
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
                     )
                     setResult(MainActivity.CAMERA_X_RESULT, intent)
@@ -100,7 +99,7 @@ class CameraActivity : AppCompatActivity() {
             } catch (exc: Exception) {
                 Toast.makeText(
                     this@CameraActivity,
-                    "Gagal memunculkan kamera.",
+                    getString(R.string.gagal_memunculkan_kamera),
                     Toast.LENGTH_SHORT
                 ).show()
             }

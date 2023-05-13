@@ -1,11 +1,11 @@
 package com.thariqzs.lakon.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.thariqzs.lakon.R
 
 class SplashActivity : AppCompatActivity() {

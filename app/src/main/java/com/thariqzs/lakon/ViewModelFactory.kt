@@ -1,7 +1,6 @@
 package com.thariqzs.lakon
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.thariqzs.lakon.preference.UserPreferences

@@ -1,20 +1,19 @@
 package com.thariqzs.lakon.activity
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.databinding.ActivityDetailBinding
-import com.thariqzs.lakon.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
     private var _binding: ActivityDetailBinding? = null
     private val binding get() = _binding!!
+    private val PARCELIZED_DETAILS = "story_details"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +48,5 @@ class DetailActivity : AppCompatActivity() {
         val inputDate = inputDateFormat.parse(date)
         val outputDate = outputDateFormat.format(inputDate)
         return outputDate.uppercase()
-    }
-
-    companion object {
-        const val PARCELIZED_DETAILS = "story_details"
-        const val TAG = "dathoriq"
     }
 }

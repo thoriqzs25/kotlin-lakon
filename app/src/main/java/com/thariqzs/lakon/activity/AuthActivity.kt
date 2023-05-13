@@ -1,21 +1,15 @@
 package com.thariqzs.lakon.activity
 
 import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.ViewModelFactory
 import com.thariqzs.lakon.databinding.ActivityAuthBinding
-import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.ui.fragment.LoginFragment
 import com.thariqzs.lakon.ui.fragment.RegisterFragment
@@ -68,7 +62,4 @@ class AuthActivity : AppCompatActivity() {
         return ViewModelProvider(activity, factory)[AuthViewModel::class.java]
     }
 
-    companion object {
-        val TAG = "aathoriq"
-    }
 }

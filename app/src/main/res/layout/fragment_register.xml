@@ -30,7 +30,7 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/poppins"
             android:includeFontPadding="false"
-            android:hint="Name"
+            android:hint="@string/name"
             android:paddingHorizontal="16dp"
             android:padding="0dp"
             android:textColor="@color/grey" />
@@ -57,7 +57,7 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/poppins"
             android:includeFontPadding="false"
-            android:hint="Email"
+            android:hint="@string/email"
             android:paddingHorizontal="16dp"
             android:padding="0dp"
             android:textColor="@color/grey" />
@@ -86,7 +86,7 @@
             android:drawablePadding="8dp"
             android:fontFamily="@font/poppins"
             android:includeFontPadding="false"
-            android:hint="Password"
+            android:hint="@string/password"
             android:paddingHorizontal="16dp"
             android:padding="0dp"
             android:textColor="@color/grey" />

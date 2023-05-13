@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.thariqzs.lakon.api.ApiConfig
-import com.thariqzs.lakon.api.AuthResponse
 import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.api.StoriesResponse
 import com.thariqzs.lakon.data.User

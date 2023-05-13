@@ -4,18 +4,15 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
@@ -25,7 +22,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.instagramclone.rotateFile
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.ViewModelFactory
@@ -35,7 +31,6 @@ import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.rv.StoryRvAdapter
 import com.thariqzs.lakon.viewmodel.MainViewModel
-import java.io.File
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreference")
 
@@ -181,7 +176,7 @@ class MainActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    getString(R.string.tidak_mendapatkan_permission),
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -231,8 +226,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val TAG = "mathoriq"
-
         const val CAMERA_X_RESULT = 200
 
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)

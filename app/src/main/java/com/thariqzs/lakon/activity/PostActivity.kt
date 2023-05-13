@@ -6,14 +6,13 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -26,20 +25,14 @@ import com.example.instagramclone.uriToFile
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.ViewModelFactory
-import com.thariqzs.lakon.api.ApiConfig
-import com.thariqzs.lakon.api.FileUploadResponse
 import com.thariqzs.lakon.databinding.ActivityPostBinding
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
-import com.thariqzs.lakon.viewmodel.MainViewModel
 import com.thariqzs.lakon.viewmodel.PostViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.io.File
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreference")
@@ -100,7 +93,7 @@ class PostActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, getString(R.string.choose_a_picture))
         launcherIntentGallery.launch(chooser)
     }
 
@@ -125,12 +118,12 @@ class PostActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == MainActivity.CAMERA_X_RESULT) {
             val myFile = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.data?.getSerializableExtra("picture", File::class.java)
+                it.data?.getSerializableExtra(getString(R.string.picture), File::class.java)
             } else {
                 @Suppress("DEPRECATION")
-                it.data?.getSerializableExtra("picture")
+                it.data?.getSerializableExtra(getString(R.string.picture))
             } as? File
-            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+            val isBackCamera = it.data?.getBooleanExtra(getString(R.string.isbackcamera), true) as Boolean
 
             myFile?.let { file ->
                 rotateFile(file, isBackCamera)
@@ -187,7 +180,13 @@ class PostActivity : AppCompatActivity() {
 
             finish()
         } else {
-            val warnMessage = if (getFile == null && binding.etDescription.text.toString().isNullOrEmpty()) "Please provide an image and the description" else if (binding.etDescription.text.toString().isNullOrEmpty()) "Please provide a description" else "Please provide an image"
+            val warnMessage = if (getFile == null && binding.etDescription.text.toString().isNullOrEmpty()) {
+                getString(R.string.please_provide_an_image_and_the_description)
+            } else if (binding.etDescription.text.toString().isNullOrEmpty()) {
+                getString(R.string.please_provide_a_description)
+            } else {
+                getString(R.string.please_provide_an_image)
+            }
             Toast.makeText(this@PostActivity, warnMessage, Toast.LENGTH_SHORT).show()
         }
     }
@@ -207,17 +206,5 @@ class PostActivity : AppCompatActivity() {
             snackbar.anchorView = binding.botView
             snackbar.show()
         }
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.pbLoading.visibility = View.VISIBLE
-        } else {
-            binding.pbLoading.visibility = View.GONE
-        }
-    }
-
-    companion object {
-        val TAG = "pathoriq"
     }
 }

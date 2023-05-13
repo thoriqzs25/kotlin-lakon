@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_detail"
-        tools:text="Lorem ipsum dolor sit amet" />
+        tools:text="@string/lorem_ipsum_dolor_sit_amet" />
 
     <TextView
         android:id="@+id/tv_detail_name"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_detail_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="APRIL 20, 2023" />
+        tools:text="@string/april_20_2023" />
 
     <TextView
         android:id="@+id/tv_detail_date"
@@ -54,5 +54,5 @@
         app:layout_constraintTop_toBottomOf="@id/tv_detail_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="APRIL 20, 2023" />
+        tools:text="@string/april_20_2023" />
 </androidx.constraintlayout.widget.ConstraintLayout>

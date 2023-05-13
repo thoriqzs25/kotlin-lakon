@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
@@ -64,7 +63,6 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
     fun validate(input: String): String? {
         return when (validationType) {
             ValidationType.EMAIL -> {
-    //                error = isEmailValid(input)
                 isEmailValid(input)
             }
 
@@ -76,7 +74,7 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
                 isNameValid(input)
             }
             else -> {
-                null // no validation needed
+                null
             }
         }
     }
@@ -87,20 +85,16 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
 
     private fun isEmailValid(email: String): String? {
         if (emailPattern.matcher(email).matches()) return null
-        return "Invalid email format"
+        return context.getString(R.string.invalid_email_format)
     }
 
     private fun isPasswordValid(pass: String): String? {
         if (pass.length >= 8) return null
-        return "Password must be at least 8 characters"
+        return context.getString(R.string.password_must_be_at_least_8_characters)
     }
 
     private fun isNameValid(name: String): String? {
         if (name.isNotEmpty()) return null
-        return "Input valid naming"
-    }
-
-    companion object {
-        const val TAG = "cetthoriq"
+        return context.getString(R.string.input_valid_naming)
     }
 }
