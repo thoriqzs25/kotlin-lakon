@@ -69,18 +69,16 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.cetEmail.text.toString()
             val password = binding.cetPass.text.toString()
-            val emailValidation = binding.cetEmail.validate(email)
-            val passwordValidation = binding.cetPass.validate(password)
 
-            if (emailValidation.isNullOrEmpty() && passwordValidation.isNullOrEmpty()) {
+            val errMsg: String = when {
+                !binding.cetEmail.error.isNullOrEmpty() -> binding.cetEmail.error.toString()
+                !binding.cetPass.error.isNullOrEmpty() -> binding.cetPass.error.toString()
+                else -> ""
+            }
+
+            if (errMsg.isNullOrEmpty()) {
                 authViewModel.loginUser(email, password)
             } else {
-                var errMsg: String = ""
-                if (!emailValidation.isNullOrEmpty()) {
-                    errMsg = emailValidation
-                } else if (!passwordValidation.isNullOrEmpty()) {
-                    errMsg = passwordValidation
-                }
                 setErrorMessage(Event(errMsg))
             }
         }

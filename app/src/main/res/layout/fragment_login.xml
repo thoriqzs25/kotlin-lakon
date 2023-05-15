@@ -39,16 +39,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_pass"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_email"
-        app:passwordToggleDrawable="@drawable/ic_show_password_selector"
-        app:passwordToggleEnabled="true">
-
+>
         <com.thariqzs.lakon.components.CustomEditText
             android:id="@+id/cet_pass"
             android:layout_width="300dp"

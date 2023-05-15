@@ -48,8 +48,10 @@ class CustomEditText : AppCompatEditText, View.OnTouchListener {
             override fun afterTextChanged(s: Editable) {
                 val input = s.toString().trim()
                 if (validate(input)?.isNotEmpty() == true) {
+                    error = validate(input)
                     setBackgroundResource(R.drawable.bg_custom_et_error)
                 } else {
+                    error = null
                     setBackgroundResource(R.drawable.bg_custom_et)
                 }
             }
