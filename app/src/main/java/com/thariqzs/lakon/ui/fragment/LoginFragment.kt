@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
         authViewModel.errorMsg.observe(viewLifecycleOwner) { msg ->
             setErrorMessage(msg)
         }
-        authViewModel.userDetail.observe(viewLifecycleOwner) {
+        authViewModel.userResponseDetail.observe(viewLifecycleOwner) {
             if (it.name!!.isNotEmpty() && it.userId!!.isNotEmpty() && it.token!!.isNotEmpty()) {
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)

@@ -4,19 +4,19 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.thariqzs.lakon.data.User
+import com.thariqzs.lakon.api.UserResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
 
-    fun userPreferencesFlow(): Flow<User> {
+    fun userPreferencesFlow(): Flow<UserResponse> {
         return dataStore.data.map { preferences ->
             val userId = preferences[USER_ID]  ?: ""
             val name = preferences[USER_NAME] ?: ""
             val token = preferences[USER_TOKEN] ?: ""
 
-            User(userId, name, token)
+            UserResponse(userId, name, token)
         }
     }
 

@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.thariqzs.lakon.api.ApiConfig
-import com.thariqzs.lakon.api.ListStoryItem
 import com.thariqzs.lakon.api.StoriesResponse
-import com.thariqzs.lakon.data.User
+import com.thariqzs.lakon.api.UserResponse
+import com.thariqzs.lakon.database.StoryItem
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
 import kotlinx.coroutines.launch
@@ -24,14 +24,14 @@ class MainViewModel(application: Application, private var pref: UserPreferences)
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _userDetail = MutableLiveData<User>()
-    val userDetail: LiveData<User> = _userDetail
+    private val _userResponseDetail = MutableLiveData<UserResponse>()
+    val userResponseDetail: LiveData<UserResponse> = _userResponseDetail
 
     private val _errorMsg = MutableLiveData<Event<String>>()
     val errorMsg: LiveData<Event<String>> = _errorMsg
 
-    private val _stories = MutableLiveData<List<ListStoryItem>>()
-    val stories: LiveData<List<ListStoryItem>> = _stories
+    private val _stories = MutableLiveData<List<StoryItem>>()
+    val stories: LiveData<List<StoryItem>> = _stories
 
     init {
         getUserPreferencesData()
@@ -41,11 +41,11 @@ class MainViewModel(application: Application, private var pref: UserPreferences)
         pref.userPreferencesFlow()
             .asLiveData()
             .observeForever { user ->
-                _userDetail.value = user
+                _userResponseDetail.value = user
             }
     }
 
-    private fun sortByDate(list : List<ListStoryItem>?): List<ListStoryItem>? {
+    private fun sortByDate(list : List<StoryItem>?): List<StoryItem>? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
 
         val sortedList = list?.sortedByDescending {

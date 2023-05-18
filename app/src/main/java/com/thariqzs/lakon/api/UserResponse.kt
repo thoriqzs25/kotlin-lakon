@@ -1,8 +1,8 @@
-package com.thariqzs.lakon.data
+package com.thariqzs.lakon.api
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class UserResponse(
     @field:SerializedName("userId")
     val userId: String?,
 

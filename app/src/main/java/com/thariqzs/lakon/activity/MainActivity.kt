@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
 import com.thariqzs.lakon.ViewModelFactory
-import com.thariqzs.lakon.api.ListStoryItem
+import com.thariqzs.lakon.database.StoryItem
 import com.thariqzs.lakon.databinding.ActivityMainBinding
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel = obtainViewModel(this)
 
-        mainViewModel.userDetail.observe(this) {
+        mainViewModel.userResponseDetail.observe(this) {
             if (it.name!!.isEmpty() || it.userId!!.isEmpty() || it.token!!.isEmpty()) {
                 val intent = Intent(this@MainActivity, AuthActivity::class.java)
                 startActivity(intent)
@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun setStoriesDataToAdapter(stories: List<ListStoryItem>) {
+    private fun setStoriesDataToAdapter(stories: List<StoryItem>) {
         binding.rvStories.layoutManager = LinearLayoutManager(this)
         val adapter = StoryRvAdapter(stories, onPressCard = { storyItem, holderView ->
             val intent = Intent(this@MainActivity, DetailActivity::class.java)

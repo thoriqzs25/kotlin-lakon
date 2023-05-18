@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import android.view.View.INVISIBLE
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -56,7 +55,7 @@ class PostActivity : AppCompatActivity() {
 
         postViewModel = obtainViewModel(this)
 
-        postViewModel.userDetail.observe(this) {
+        postViewModel.userResponseDetail.observe(this) {
             val token = it.token
             if (token != null) {
                 if (token.isNotEmpty()) {

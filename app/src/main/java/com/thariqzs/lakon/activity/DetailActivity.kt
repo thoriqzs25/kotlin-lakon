@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.thariqzs.lakon.R
-import com.thariqzs.lakon.api.ListStoryItem
+import com.thariqzs.lakon.database.StoryItem
 import com.thariqzs.lakon.databinding.ActivityDetailBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -22,7 +22,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val details = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(PARCELIZED_DETAILS, ListStoryItem::class.java)
+            intent.getParcelableExtra(PARCELIZED_DETAILS, StoryItem::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(PARCELIZED_DETAILS)

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.thariqzs.lakon.api.ApiConfig
 import com.thariqzs.lakon.api.FileUploadResponse
-import com.thariqzs.lakon.data.User
+import com.thariqzs.lakon.api.UserResponse
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
 import okhttp3.MultipartBody
@@ -21,8 +21,8 @@ class PostViewModel(private val mApplication: Application, private val pref: Use
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _userDetail = MutableLiveData<User>()
-    val userDetail: LiveData<User> = _userDetail
+    private val _userResponseDetail = MutableLiveData<UserResponse>()
+    val userResponseDetail: LiveData<UserResponse> = _userResponseDetail
 
     private val _errorMsg = MutableLiveData<Event<String>>()
     val errorMsg: LiveData<Event<String>> = _errorMsg
@@ -36,7 +36,7 @@ class PostViewModel(private val mApplication: Application, private val pref: Use
         pref.userPreferencesFlow()
             .asLiveData()
             .observeForever { user ->
-                _userDetail.value = user
+                _userResponseDetail.value = user
             }
         _isLoading.value = false
     }

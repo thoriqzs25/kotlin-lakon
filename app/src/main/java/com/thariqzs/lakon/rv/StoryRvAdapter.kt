@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.instagramclone.getTimeAgo
 import com.thariqzs.lakon.R
-import com.thariqzs.lakon.api.ListStoryItem
+import com.thariqzs.lakon.database.StoryItem
 import com.thariqzs.lakon.databinding.StoryCardBinding
 
-class StoryRvAdapter(private val stories: List<ListStoryItem>, private val onPressCard: (ListStoryItem, View) -> Unit) :
+class StoryRvAdapter(private val stories: List<StoryItem>, private val onPressCard: (StoryItem, View) -> Unit) :
     RecyclerView.Adapter<StoryRvAdapter.ViewHolder>() {
     inner class ViewHolder(var binding: StoryCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(story: ListStoryItem) {
+        fun bind(story: StoryItem) {
             itemView.setOnClickListener {
                 onPressCard(story, binding.ivStoryImage)
             }

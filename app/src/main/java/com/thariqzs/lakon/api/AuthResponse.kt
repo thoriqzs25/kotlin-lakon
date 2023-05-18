@@ -1,7 +1,6 @@
 package com.thariqzs.lakon.api
 
 import com.google.gson.annotations.SerializedName
-import com.thariqzs.lakon.data.User
 
 data class AuthResponse(
     @field:SerializedName("error")
@@ -11,5 +10,5 @@ data class AuthResponse(
     val message: String? = null,
 
     @field:SerializedName("loginResult")
-    val loginResult: User? = null
+    val loginResult: UserResponse? = null
 )
