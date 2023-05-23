@@ -45,4 +45,5 @@
     <string name="nama">nama</string>
     <string name="tanggal">tanggal</string>
     <string name="deskripsi">deskripsi</string>
+    <string name="retry">Retry</string>
 </resources>

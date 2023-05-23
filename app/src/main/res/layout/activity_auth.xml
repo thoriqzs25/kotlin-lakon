@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AuthActivity">
+    tools:context=".ui.auth.AuthActivity">
 
     <TextView
         android:id="@+id/tv_app_name"
@@ -22,7 +22,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fcv_login_or_register"
-        android:name="com.thariqzs.lakon.ui.fragment.LoginFragment"
+        android:name="com.thariqzs.lakon.ui.login.LoginFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tv_app_name"

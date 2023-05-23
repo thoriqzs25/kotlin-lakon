@@ -17,6 +17,7 @@ object ApiConfig {
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
             var requestHeaders = req.newBuilder()
+                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWNNMkJoTFQ1dHU3cTV6a0giLCJpYXQiOjE2ODQzMjcxODB9.LmNIXD38UYgNNpEcSAcvgBnzQQG3vXjKVQKoEI4cVCk")
             chain.proceed(requestHeaders.build())
         }
         val client = OkHttpClient.Builder()
