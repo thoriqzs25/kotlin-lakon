@@ -33,6 +33,7 @@ import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.ui.adapter.LoadingStateAdapter
 import com.thariqzs.lakon.ui.adapter.StoryRvAdapter
 import com.thariqzs.lakon.ui.auth.AuthActivity
+import com.thariqzs.lakon.ui.map.MapsActivity
 import com.thariqzs.lakon.ui.post.PostActivity
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreference")
@@ -97,14 +98,10 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-//                mainViewModel.getStories(it.token)
                 token = it.token
             }
         }
 
-//        mainViewModel.stories.observe(this) {
-//            setStoriesDataToAdapter(it)
-//        }
         mainViewModel.errorMsg.observe(this) {
             setErrorMessage(it)
         }
@@ -121,12 +118,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        binding.fabMap.setOnClickListener {
+            onExpandFab()
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
+            startActivity(intent)
+        }
         binding.fabLogout.setOnClickListener {
             onExpandFab()
             mainViewModel.logoutUser()
         }
         binding.srlMain.setOnRefreshListener {
-//            mainViewModel.getStories(token)
             getData()
 
             Handler().postDelayed(Runnable {
@@ -136,22 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         getData()
     }
-
-//    override fun onRestart() {
-//        super.onRestart()
-//        if (triggerOnRestart) {
-//            showLoading(true)
-//            Handler().postDelayed(Runnable {
-////            mainViewModel.getStories(token)
-//                getData()
-//                showLoading(false)
-//                Log.d(TAG, "onRestart: test 1")
-//            }, 1500)
-//            Log.d(TAG, "onRestart: test 2")
-//        }
-//
-//        triggerOnRestart = true
-//    }
 
     override fun onBackPressed() {
     }
@@ -167,9 +152,11 @@ class MainActivity : AppCompatActivity() {
     private fun setVisibility(buttonClicked: Boolean) {
         if (!buttonClicked) {
             binding.fabCreatePost.visibility = View.VISIBLE
+            binding.fabMap.visibility = View.VISIBLE
             binding.fabLogout.visibility = View.VISIBLE
         } else {
             binding.fabCreatePost.visibility = View.INVISIBLE
+            binding.fabMap.visibility = View.INVISIBLE
             binding.fabLogout.visibility = View.INVISIBLE
         }
     }
@@ -177,10 +164,12 @@ class MainActivity : AppCompatActivity() {
     private fun setAnimation(buttonClicked: Boolean) {
         if (!buttonClicked) {
             binding.fabCreatePost.startAnimation(fromBottomAnimation)
+            binding.fabMap.startAnimation(fromBottomAnimation)
             binding.fabLogout.startAnimation(fromBottomAnimation)
             binding.fabExpandOptions.startAnimation(rotateOpenAnimation)
         } else {
             binding.fabCreatePost.startAnimation(toBottomAnimation)
+            binding.fabMap.startAnimation(toBottomAnimation)
             binding.fabLogout.startAnimation(toBottomAnimation)
             binding.fabExpandOptions.startAnimation(rotateCloseAnimation)
         }
@@ -189,9 +178,11 @@ class MainActivity : AppCompatActivity() {
     private fun buttonSetClickable() {
         if (!addButtonClicked) {
             binding.fabCreatePost.isClickable = true
+            binding.fabMap.isClickable = true
             binding.fabLogout.isClickable = true
         } else {
             binding.fabCreatePost.isClickable = false
+            binding.fabMap.isClickable = false
             binding.fabLogout.isClickable = false
         }
     }
@@ -242,7 +233,6 @@ class MainActivity : AppCompatActivity() {
 //        binding.rvStories.adapter = adapter
 //    }
     private fun getData() {
-        Log.d(TAG, "getData: line 244")
         binding.rvStories.layoutManager = LinearLayoutManager(this)
         val adapter = StoryRvAdapter(
             onPressCard = { storyItem, holderView ->
@@ -264,7 +254,6 @@ class MainActivity : AppCompatActivity() {
             }
         )
         mainViewModel.story.observe(this) {
-            Log.d(TAG, "getData: line 266")
             adapter.submitData(lifecycle, it)
         }
     }

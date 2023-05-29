@@ -15,7 +15,6 @@ import com.thariqzs.lakon.data.paging.remotemediator.StoryRemoteMediator
 
 class StoryRepository(private val mainDatabase: MainDatabase, private val apiService: ApiService, private val context: Context) {
     fun getStory(): LiveData<PagingData<Story>> {
-        Log.d("srthoriq", "getStory: line 17")
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(

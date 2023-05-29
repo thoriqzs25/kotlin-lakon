@@ -10,7 +10,6 @@ object Injection {
     fun provideRepository(context: Context): StoryRepository {
         val database = MainDatabase.getDatabase(context)
         val apiService = ApiConfig.getApiService()
-        Log.d("ithoriq", "provideRepository: line 13")
         return StoryRepository(database, apiService, context)
     }
 }

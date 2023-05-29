@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/green"
+        android:backgroundTint="@color/blue"
         app:tint="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -41,6 +41,19 @@
         app:layout_constraintEnd_toEndOf="@id/fab_expand_options" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_map"
+        android:src="@drawable/ic_map"
+        app:maxImageSize="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="invisible"
+        android:backgroundTint="@color/green"
+        app:tint="@color/background"
+        app:layout_constraintBottom_toTopOf="@id/fab_create_post"
+        app:layout_constraintEnd_toEndOf="@id/fab_create_post" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_logout"
         android:src="@drawable/ic_logout"
         app:maxImageSize="36dp"
@@ -50,8 +63,8 @@
         android:visibility="invisible"
         android:backgroundTint="@color/red"
         app:tint="@color/background"
-        app:layout_constraintBottom_toTopOf="@id/fab_create_post"
-        app:layout_constraintEnd_toEndOf="@id/fab_create_post" />
+        app:layout_constraintBottom_toTopOf="@id/fab_map"
+        app:layout_constraintEnd_toEndOf="@id/fab_map" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="16dp"

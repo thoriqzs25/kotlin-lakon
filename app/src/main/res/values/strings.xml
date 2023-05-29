@@ -46,4 +46,5 @@
     <string name="tanggal">tanggal</string>
     <string name="deskripsi">deskripsi</string>
     <string name="retry">Retry</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

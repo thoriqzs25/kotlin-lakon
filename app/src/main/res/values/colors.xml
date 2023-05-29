@@ -8,4 +8,5 @@
     <color name="grey">#44494F</color>
     <color name="background">#292D32</color>
     <color name="date_color">#C0C0C0</color>
+    <color name="blue">#ADC0FF</color>
 </resources>

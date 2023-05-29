@@ -8,6 +8,7 @@ import com.thariqzs.lakon.di.Injection
 import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.ui.auth.AuthViewModel
 import com.thariqzs.lakon.ui.main.MainViewModel
+import com.thariqzs.lakon.ui.map.MapsViewModel
 import com.thariqzs.lakon.ui.post.PostViewModel
 
 class ViewModelFactory private constructor(private val mApplication: Application, private val pref: UserPreferences?, private val context: Context) : ViewModelProvider.NewInstanceFactory() {
@@ -46,6 +47,12 @@ class ViewModelFactory private constructor(private val mApplication: Application
         } else if (modelClass.isAssignableFrom(PostViewModel::class.java)) {
             if (pref != null) {
                 return PostViewModel(mApplication, pref) as T
+            } else {
+                throw IllegalArgumentException("UserPreferences cannot be null for PostViewModel")
+            }
+        } else if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
+            if (pref != null) {
+                return MapsViewModel(mApplication, pref) as T
             } else {
                 throw IllegalArgumentException("UserPreferences cannot be null for PostViewModel")
             }
