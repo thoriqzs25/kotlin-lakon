@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.thariqzs.lakon.data.model.UserResponse
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>) {
@@ -18,6 +19,11 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
             UserResponse(userId, name, token)
         }
+    }
+
+    suspend fun getToken(): String? {
+        val preferences = dataStore.data.first()
+        return preferences[USER_TOKEN]
     }
 
     suspend fun updateUserPreferences(userId: String, name: String, token: String) {

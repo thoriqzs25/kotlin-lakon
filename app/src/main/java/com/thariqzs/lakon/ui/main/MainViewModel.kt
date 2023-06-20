@@ -31,10 +31,7 @@ class MainViewModel(private var pref: UserPreferences, private val storyReposito
     private val _story = MutableLiveData<PagingData<Story>>()
     val story: LiveData<PagingData<Story>> = _story
 
-    // Rest of the code...
-
     init {
-        // Fetch story data and assign it to _story
         viewModelScope.launch {
             try {
                 _isLoading.value = true
@@ -46,14 +43,12 @@ class MainViewModel(private var pref: UserPreferences, private val storyReposito
                 _isLoading.value = false
             }
         }
-        getUserPreferencesData()
     }
 
     fun getUserPreferencesData() {
         pref.userPreferencesFlow()
             .transform { value ->
-                // Map the nullable value to a non-null value or a default value if needed
-                emit(value ?: UserResponse(value.userId, value.name, value.token))
+                emit(value ?: UserResponse(userId = "", name = "", token = ""))
             }
             .asLiveData()
             .observeForever { user ->

@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         pref = UserPreferences.getInstance(dataStore)
 
         mainViewModel = obtainViewModel(this)
+        mainViewModel.getUserPreferencesData()
 
         mainViewModel.userResponseDetail.observe(this) {
             if (it.name!!.isEmpty() || it.userId!!.isEmpty() || it.token!!.isEmpty()) {

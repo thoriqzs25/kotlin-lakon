@@ -19,6 +19,7 @@ import com.thariqzs.lakon.utils.getOrAwaitValue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -67,6 +68,28 @@ class MainViewModelTest {
         assertNotNull(differ.snapshot())
         assertEquals(dummyStory.size, differ.snapshot().size)
         assertEquals(dummyStory[0], differ.snapshot()[0])
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `when Get Stories Empty Should Return No Data`() = runTest {
+        val data: PagingData<Story> = PagingData.from(emptyList())
+        val expectedStories = MutableLiveData<PagingData<Story>>()
+        expectedStories.value = data
+
+        Mockito.`when`(storyRepository.getStory()).thenReturn(expectedStories)
+
+        val mainViewModel = MainViewModel(pref, storyRepository)
+        val actualStories: PagingData<Story> = mainViewModel.story.getOrAwaitValue()
+
+        val differ = AsyncPagingDataDiffer(
+            diffCallback = StoryRvAdapter.DIFF_CALLBACK,
+            updateCallback = noopListUpdateCallback,
+            workerDispatcher = Dispatchers.Main
+        )
+        differ.submitData(actualStories)
+
+        Assert.assertEquals(0, differ.snapshot().size)
     }
 }
 
