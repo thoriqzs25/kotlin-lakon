@@ -1,7 +1,11 @@
 package com.thariqzs.lakon.ui.map
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +15,8 @@ import com.thariqzs.lakon.data.model.Story
 import com.thariqzs.lakon.data.repository.StoryRepository
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +32,6 @@ class MapsViewModel (private val mApplication: Application, private val pref: Us
     val errorMsg: LiveData<Event<String>> = _errorMsg
 
     init {
-        Log.d(TAG, "line 29 fetch data: ")
         getStories()
     }
 

@@ -2,6 +2,7 @@ package com.thariqzs.lakon.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.thariqzs.lakon.data.model.UserResponse
 import com.thariqzs.lakon.data.repository.StoryRepository
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -26,18 +28,33 @@ class MainViewModel(private var pref: UserPreferences, private val storyReposito
     private val _errorMsg = MutableLiveData<Event<String>>()
     val errorMsg: LiveData<Event<String>> = _errorMsg
 
-//    private val _stories = MutableLiveData<List<Story>>()
-//    val stories: LiveData<List<Story>> = _stories
+    private val _story = MutableLiveData<PagingData<Story>>()
+    val story: LiveData<PagingData<Story>> = _story
 
-    val story: LiveData<PagingData<Story>> =
-        storyRepository.getStory().cachedIn(viewModelScope)
+    // Rest of the code...
 
     init {
+        // Fetch story data and assign it to _story
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val data: LiveData<PagingData<Story>> = storyRepository.getStory().cachedIn(viewModelScope)
+                data.observeForever { pagingData -> _story.value = pagingData }
+            } catch (e: Exception) {
+                _errorMsg.value = Event("Error fetching story: ${e.message}")
+            } finally {
+                _isLoading.value = false
+            }
+        }
         getUserPreferencesData()
     }
 
     fun getUserPreferencesData() {
         pref.userPreferencesFlow()
+            .transform { value ->
+                // Map the nullable value to a non-null value or a default value if needed
+                emit(value ?: UserResponse(value.userId, value.name, value.token))
+            }
             .asLiveData()
             .observeForever { user ->
                 _userResponseDetail.value = user
@@ -48,46 +65,12 @@ class MainViewModel(private var pref: UserPreferences, private val storyReposito
         storyRepository.deleteList()
     }
 
-//    private fun sortByDate(list : List<Story>?): List<Story>? {
-//        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-//
-//        val sortedList = list?.sortedByDescending {
-//            dateFormat.parse(it.createdAt)?.time
-//        }
-//
-//        return sortedList
-//    }
-
     fun logoutUser() {
         viewModelScope.launch {
             pref.clearUserPreferences()
         }
     }
 
-//    fun getStories(token: String) {
-//        _isLoading.value = true
-//        val client = ApiConfig.getApiService().getAllStories("Bearer $token")
-//        client.enqueue(object : Callback<StoriesResponse> {
-//            override fun onResponse(
-//                call: Call<StoriesResponse>,
-//                response: Response<StoriesResponse>
-//            ) {
-//                _isLoading.value = false
-//                if (response.isSuccessful) {
-//                    _stories.value = sortByDate(response.body()?.listStory)
-//                } else {
-//                    Log.d(TAG, "onResponseFail: ${response.message()} ")
-//                    _errorMsg.value = Event("Server Error, ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<StoriesResponse>, t: Throwable) {
-//                _isLoading.value = false
-//                _errorMsg.value = Event("Error, cek koneksi anda!")
-//                Log.d(TAG, "onFailure: ${t.message}")
-//            }
-//        })
-//    }
 
     companion object {
         val TAG = "mvmthoriq"
