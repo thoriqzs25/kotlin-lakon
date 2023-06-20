@@ -2,6 +2,9 @@ package com.thariqzs.lakon.data.paging.remotemediator
 
 import android.content.Context
 import android.util.Log
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -11,7 +14,11 @@ import com.thariqzs.lakon.api.ApiService
 import com.thariqzs.lakon.data.db.MainDatabase
 import com.thariqzs.lakon.data.model.RemoteKeys
 import com.thariqzs.lakon.data.model.Story
+import com.thariqzs.lakon.preference.UserPreferences
+import kotlinx.coroutines.flow.first
 import java.lang.Exception
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreference")
 
 @OptIn(ExperimentalPagingApi::class)
 class StoryRemoteMediator(
@@ -30,6 +37,8 @@ class StoryRemoteMediator(
         loadType: LoadType,
         state: PagingState<Int, Story>
     ): MediatorResult {
+        val token = UserPreferences.getInstance(context.dataStore).userPreferencesFlow().first().token
+
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -52,31 +61,39 @@ class StoryRemoteMediator(
         }
 
         return try {
-            val response = apiService.getAllStories(page, state.config.pageSize)
-            val resBody = response.body()
-            val story = resBody?.listStory
+            Log.d(TAG, "load: test")
+            var endOfPaginationReached = true
+            if (token != null) {
 
-            val endOfPaginationReached = story?.isEmpty()
-            db.withTransaction {
-                if (loadType == LoadType.REFRESH) {
-                    storyDao.deleteAll()
-                    remoteKeysDao.deleteRemoteKeys()
-                }
+                val response = apiService.getAllStories(page, state.config.pageSize)
+                val resBody = response.body()
+                Log.d(TAG, "resBody: $resBody")
+                Log.d(TAG, "response: $response")
+                val story = resBody?.listStory
+                endOfPaginationReached = story?.isEmpty() == true
 
-                val prevKey = if (page == 1) null else page - 1
-                val nextKey = if (endOfPaginationReached == true) null else page + 1
-                val keys = story?.map {
-                    RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
-                }
+                db.withTransaction {
+                    if (loadType == LoadType.REFRESH) {
+                        storyDao.deleteAll()
+                        remoteKeysDao.deleteRemoteKeys()
+                    }
 
-                keys?.let {
-                    remoteKeysDao.insertAll(it)
+                    val prevKey = if (page == 1) null else page - 1
+                    val nextKey = if (endOfPaginationReached == true) null else page + 1
+                    val keys = story?.map {
+                        RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
+                    }
+
+                    keys?.let {
+                        remoteKeysDao.insertAll(it)
+                    }
+                    story?.let {
+                        storyDao.insertStory(it)
+                    }
                 }
-                story?.let {
-                    storyDao.insertStory(it)
-                }
-//
             }
+
+
             MediatorResult.Success(endOfPaginationReached = endOfPaginationReached == true)
         } catch (exception: Exception) {
             MediatorResult.Error(exception)

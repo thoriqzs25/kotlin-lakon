@@ -1,5 +1,6 @@
 package com.thariqzs.lakon.api
 
+import android.util.Log
 import de.hdodenhof.circleimageview.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -8,16 +9,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    fun getApiService(): ApiService {
-        val loggingInterceptor = if (BuildConfig.DEBUG) {
+    fun getApiService(token: String? = null): ApiService {
+        val TAG = "gasthoriq"
+        val loggingInterceptor =
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-        } else {
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-        }
+//        } else {
+//            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+//        }
         val authInterceptor = Interceptor { chain ->
             val req = chain.request()
             var requestHeaders = req.newBuilder()
-                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWNNMkJoTFQ1dHU3cTV6a0giLCJpYXQiOjE2ODQzMjcxODB9.LmNIXD38UYgNNpEcSAcvgBnzQQG3vXjKVQKoEI4cVCk")
+            if (!token.isNullOrEmpty()) {
+                requestHeaders = requestHeaders.addHeader("Authorization", "Bearer $token")
+            }
             chain.proceed(requestHeaders.build())
         }
         val client = OkHttpClient.Builder()
