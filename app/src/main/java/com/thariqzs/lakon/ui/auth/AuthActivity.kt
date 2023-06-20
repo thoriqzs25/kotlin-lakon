@@ -8,11 +8,12 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.thariqzs.lakon.R
-import com.thariqzs.lakon.factory.ViewModelFactory
 import com.thariqzs.lakon.databinding.ActivityAuthBinding
+import com.thariqzs.lakon.factory.ViewModelFactory
 import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.ui.login.LoginFragment
 import com.thariqzs.lakon.ui.register.RegisterFragment
+
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreference")
 
 class AuthActivity : AppCompatActivity() {

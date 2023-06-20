@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,12 +22,12 @@ import com.example.instagramclone.rotateFile
 import com.example.instagramclone.uriToFile
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
-import com.thariqzs.lakon.factory.ViewModelFactory
-import com.thariqzs.lakon.ui.camera.CameraActivity
-import com.thariqzs.lakon.ui.main.MainActivity
 import com.thariqzs.lakon.databinding.ActivityPostBinding
+import com.thariqzs.lakon.factory.ViewModelFactory
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
+import com.thariqzs.lakon.ui.camera.CameraActivity
+import com.thariqzs.lakon.ui.main.MainActivity
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody

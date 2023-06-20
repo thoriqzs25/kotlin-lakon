@@ -1,10 +1,9 @@
 package com.thariqzs.lakon.ui.map
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,8 +14,6 @@ import com.thariqzs.lakon.R
 import com.thariqzs.lakon.data.model.Story
 import com.thariqzs.lakon.databinding.ActivityMapsBinding
 import com.thariqzs.lakon.factory.ViewModelFactory
-import com.thariqzs.lakon.ui.main.MainActivity
-import com.thariqzs.lakon.ui.main.MainViewModel
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 

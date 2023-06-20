@@ -20,19 +20,17 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.thariqzs.lakon.R
-import com.thariqzs.lakon.factory.ViewModelFactory
-import com.thariqzs.lakon.data.model.Story
-import com.thariqzs.lakon.ui.detail.DetailActivity
 import com.thariqzs.lakon.databinding.ActivityMainBinding
+import com.thariqzs.lakon.factory.ViewModelFactory
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
 import com.thariqzs.lakon.ui.adapter.LoadingStateAdapter
 import com.thariqzs.lakon.ui.adapter.StoryRvAdapter
 import com.thariqzs.lakon.ui.auth.AuthActivity
+import com.thariqzs.lakon.ui.detail.DetailActivity
 import com.thariqzs.lakon.ui.map.MapsActivity
 import com.thariqzs.lakon.ui.post.PostActivity
 
@@ -234,7 +232,9 @@ class MainActivity : AppCompatActivity() {
 //        binding.rvStories.adapter = adapter
 //    }
     private fun getData() {
-        binding.rvStories.layoutManager = LinearLayoutManager(this)
+        Log.d(TAG, "getData: rv")
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvStories.layoutManager = layoutManager
         val adapter = StoryRvAdapter(
             onPressCard = { storyItem, holderView ->
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
@@ -256,6 +256,7 @@ class MainActivity : AppCompatActivity() {
         )
         mainViewModel.story.observe(this) {
             adapter.submitData(lifecycle, it)
+            layoutManager.scrollToPosition(0)
         }
     }
 

@@ -2,7 +2,6 @@ package com.thariqzs.lakon.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,8 +14,6 @@ import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class MainViewModel(private var pref: UserPreferences, private val storyRepository: StoryRepository): ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()

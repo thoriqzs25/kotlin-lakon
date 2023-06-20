@@ -1,7 +1,6 @@
 package com.thariqzs.lakon.data.paging.remotemediator
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -16,7 +15,6 @@ import com.thariqzs.lakon.data.model.RemoteKeys
 import com.thariqzs.lakon.data.model.Story
 import com.thariqzs.lakon.preference.UserPreferences
 import kotlinx.coroutines.flow.first
-import java.lang.Exception
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userPreference")
 
@@ -61,14 +59,11 @@ class StoryRemoteMediator(
         }
 
         return try {
-            Log.d(TAG, "load: test")
             var endOfPaginationReached = true
             if (token != null) {
 
                 val response = apiService.getAllStories(page, state.config.pageSize)
                 val resBody = response.body()
-                Log.d(TAG, "resBody: $resBody")
-                Log.d(TAG, "response: $response")
                 val story = resBody?.listStory
                 endOfPaginationReached = story?.isEmpty() == true
 

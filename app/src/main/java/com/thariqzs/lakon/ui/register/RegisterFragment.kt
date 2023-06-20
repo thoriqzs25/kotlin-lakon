@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import com.thariqzs.lakon.factory.ViewModelFactory
-import com.thariqzs.lakon.ui.main.MainActivity
 import com.thariqzs.lakon.components.CustomEditText
 import com.thariqzs.lakon.databinding.FragmentRegisterBinding
+import com.thariqzs.lakon.factory.ViewModelFactory
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.ui.auth.AuthViewModel
+import com.thariqzs.lakon.ui.main.MainActivity
 
 class RegisterFragment : Fragment() {
     private lateinit var authViewModel: AuthViewModel

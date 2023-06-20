@@ -1,7 +1,5 @@
 package com.thariqzs.lakon.api
 
-import android.util.Log
-import de.hdodenhof.circleimageview.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
