@@ -12,6 +12,7 @@ import com.thariqzs.lakon.data.model.UserResponse
 import com.thariqzs.lakon.data.repository.StoryRepository
 import com.thariqzs.lakon.helper.Event
 import com.thariqzs.lakon.preference.UserPreferences
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
@@ -32,6 +33,7 @@ class MainViewModel(private var pref: UserPreferences, private val storyReposito
         viewModelScope.launch {
             try {
                 _isLoading.value = true
+                delay(1000)
                 val data: LiveData<PagingData<Story>> = storyRepository.getStory().cachedIn(viewModelScope)
                 data.observeForever { pagingData -> _story.value = pagingData }
             } catch (e: Exception) {

@@ -1,7 +1,6 @@
 package com.thariqzs.lakon.ui.map
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -37,7 +36,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        Log.d(TAG, "onMapReady: test")
 
         // Add a marker in Sydney and move the camera
         val indonesia = LatLng(-6.200000, 106.816666)

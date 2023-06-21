@@ -45,7 +45,6 @@ class AuthViewModel(application: Application, private val pref: UserPreferences)
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) return
 
         _isLoading.value = true
-        Log.d(TAG, "loginUser: $email, $password")
         val client = ApiConfig.getApiService().loginUser(email!!, password!!)
         client.enqueue(object : Callback<AuthResponse> {
             override fun onResponse(

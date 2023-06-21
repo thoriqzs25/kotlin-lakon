@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import com.thariqzs.lakon.R
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -51,7 +50,6 @@ fun rotateFile(file: File, isBackCamera: Boolean = false) {
     val matrix = Matrix()
     val bitmap = BitmapFactory.decodeFile(file.path)
     val rotation = if (isBackCamera) 90f else 90f
-    Log.d("uthoriq", "rotateFile: rotation $rotation")
     matrix.postRotate(rotation)
 //    if (!isBackCamera) {
 //        matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)

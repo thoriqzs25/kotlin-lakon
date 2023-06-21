@@ -1,7 +1,6 @@
 package com.thariqzs.lakon.di
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -22,7 +21,6 @@ object Injection {
         }
         val database = MainDatabase.getDatabase(context)
         val apiService = ApiConfig.getApiService(token)
-        Log.d(TAG, "token: $token")
         return StoryRepository(database, apiService, context)
     }
 }

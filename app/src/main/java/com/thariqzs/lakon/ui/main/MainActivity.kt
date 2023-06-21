@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -232,7 +231,6 @@ class MainActivity : AppCompatActivity() {
 //        binding.rvStories.adapter = adapter
 //    }
     private fun getData() {
-        Log.d(TAG, "getData: rv")
         val layoutManager = LinearLayoutManager(this)
         binding.rvStories.layoutManager = layoutManager
         val adapter = StoryRvAdapter(
